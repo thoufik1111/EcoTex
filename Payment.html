@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            background: linear-gradient(135deg, #141e30, #2a6c56);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+        /* Floating dollar symbol styling */
+        .dollar {
+            position: absolute;
+            font-size: 40px;
+            color: rgba(3, 244, 132, 0.4); /* Light green, translucent */
+            animation: floatDollar 5s infinite ease-in-out;
+        }
+
+        /* Keyframes for dollar symbols floating upwards */
+        @keyframes floatDollar {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .payment-container {
+            text-align: center;
+            padding: 40px 0;
+            color: #03f484;
+            z-index: 1000;
+        }
+    
+        .payment-header {
+            font-size: 2.2em;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .payment-subheader {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+            opacity: 0; /* Start hidden */
+            animation: slideIn 1s forwards; /* Apply the animation */
+        }
+
+        /* Keyframe animation to slide in the payment form */
+        @keyframes slideIn {
+            from {
+                transform: translateY(100vh); /* Start from below the viewport */
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0); /* End in the center of the screen */
+                opacity: 1;
+            }
+        }
+        .payment-form:hover{
+            border-radius: 12px;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+            transform: scale(2.1);
+        }
+
+        .input-field {
+            width: 50%;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .pay-button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03f484;
+            font-size: 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: 0.5s;
+            margin-top: 20px;
+            letter-spacing: 4px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        .pay-button:hover {
+            background: #03f484;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03f484, 0 0 25px #03f484, 0 0 50px #03f484, 0 0 100px #03f484;
+            transform: scale(1.1);
+        }
+        .pay-button span {
+            position: absolute;
+            display: block;
+        }
+        .pay-button span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03f484);
+            animation: btn-anim1 1s linear infinite;
+        }
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%, 100% {
+                left: 100%;
+            }
+        }
+        .pay-button span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03f484);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: 0.25s;
+        }
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%, 100% {
+                top: 100%;
+            }
+        }
+        .pay-button span:nth-child(3) {
+            bottom: 0;
+            right: 100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03f484);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: 0.5s;
+        }
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%, 100% {
+                right: 100%;
+            }
+        }
+        .pay-button span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03f484);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: 0.75s;
+        }
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%, 100% {
+                bottom: 100%;
+            }
+        }
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #141e30;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            z-index: 1000;
+        }
+        .success-popup h3 {
+            color: #03f484;
+            font-size: 1.8em;
+        }
+        .popup-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            background-color: #03f484;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">Complete Your Payment</div>
+        <div class="payment-subheader">Choose your preferred payment method</div>
+        <div class="payment-form">
+            <select class="input-field" id="payment-mode" onchange="togglePaymentFields()">
+                <option value="">Select Payment Mode</option>
+                <option value="UPI">UPI</option>
+                <option value="Netbanking">Netbanking</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Credit Card">Credit Card</option>
+            </select>
+            <div id="card-details" style="display:none;">
+                <input type="text" class="input-field" id="card-number" placeholder="Card Number">
+                <input type="text" class="input-field" id="card-name" placeholder="Name on Card">
+                <input type="text" class="input-field" id="card-expiry" placeholder="Expiry Date (MM/YY)">
+                <input type="text" class="input-field" id="card-cvv" placeholder="CVV">
+            </div>
+            <div id="upi-options" style="display:none;">
+                <label>Select UPI Option:</label>
+                <select class="input-field" id="upi-option">
+                    <option>GPay</option>
+                    <option>PhonePe</option>
+                    <option>Paytm</option>
+                    <option>BHIM</option>
+                </select>
+                <input type="text" class="input-field" id="upi-id" placeholder="Enter UPI ID">
+            </div>
+            <button class="pay-button" onclick="proceedPayment()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>Proceed to Pay
+            </button>
+        </div>
+    </div>
+    <div class="success-popup" id="success-popup">
+        <h3>Payment Successful!</h3>
+        <button class="popup-button" onclick="closePopup()">Close</button>
+    </div>
+    <!-- Dollar symbols floating in background -->
+    <div class="dollar" style="left: 10%; animation-duration: 8s;">$</div>
+    <div class="dollar" style="left: 25%; animation-duration: 10s; animation-delay: 1s;">$</div>
+    <div class="dollar" style="left: 40%; animation-duration: 12s; animation-delay: 2s;">$</div>
+    <div class="dollar" style="left: 60%; animation-duration: 9s; animation-delay: 3s;">$</div>
+    <div class="dollar" style="left: 75%; animation-duration: 11s; animation-delay: 1.5s;">$</div>
+
+    <script>
+        function togglePaymentFields() {
+            const paymentMode = document.getElementById('payment-mode').value;
+            const cardDetails = document.getElementById('card-details');
+            const upiOptions = document.getElementById('upi-options');
+
+            if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card' || paymentMode === 'Netbanking') {
+                cardDetails.style.display = 'block';
+                upiOptions.style.display = 'none';
+            } else if (paymentMode === 'UPI') {
+                upiOptions.style.display = 'block';
+                cardDetails.style.display = 'none';
+            } else {
+                cardDetails.style.display = 'none';
+                upiOptions.style.display = 'none';
+            }
+        }
+
+        function proceedPayment() {
+            const paymentMode = document.getElementById('payment-mode').value;
+            const cardNumber = document.getElementById('card-number').value;
+            const upiID = document.getElementById('upi-id').value;
+
+            if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card' || paymentMode === 'Netbanking') {
+                if (cardNumber === '') {
+                    alert('Please enter card details.');
+                    return;
+                }
+               
+            } else if (paymentMode === 'UPI' && upiID === '') {
+                alert('Please enter UPI ID.');
+                return;
+            }
+
+            const successPopup = document.getElementById('success-popup');
+            successPopup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const successPopup = document.getElementById('success-popup');
+            successPopup.style.display = 'none';
+            window.location.href = 'Sample.html'; 
+        }
+    </script>
+</body>
+</html>

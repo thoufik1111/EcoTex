@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #141e30, #2a6c56);
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            border-radius: 12px;
+            width: 300px;
+        }
+
+        .input-container {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #03f484;
+            outline: none;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .input-field::placeholder {
+            color: transparent;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 18px;
+            color: #fff;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .input-field:focus~.input-label,
+        .input-field:valid~.input-label {
+            top: -9px;
+            left: 0;
+            color: #03f484;
+            font-size: 12px;
+        }
+
+        .button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03f484;
+            font-size: 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: 0.5s;
+            margin-top: 40px;
+            letter-spacing: 4px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        .button:hover {
+            background: #03f484;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03f484, 0 0 25px #03f484, 0 0 50px #03f484, 0 0 100px #03f484;
+        }
+
+        .button span {
+            position: absolute;
+            display: block;
+        }
+
+        .button span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03f484);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%, 100% {
+                left: 100%;
+            }
+        }
+
+        .button span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03f484);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: 0.25s;
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%, 100% {
+                top: 100%;
+            }
+        }
+
+        .button span:nth-child(3) {
+            bottom: 0;
+            right: 100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03f484);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%, 100% {
+                right: 100%;
+            }
+        }
+
+        .button span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03f484);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: 0.75s;
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%, 100% {
+                bottom: 100%;
+            }
+        }
+    </style>
+    <script>
+        function register() {
+            // Simple validation for fields
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Assume payment is successful for demo purposes
+            if (firstName && lastName && email ) {
+                alert("Registration Completed!");
+                window.location.href = "Payment.html"; 
+            } else {
+                alert("Please fill in all fields and provide payment information.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2 style="color: #03f484;">Register</h2>
+        <div class="input-container">
+            <input type="text" id="firstName" class="input-field" required>
+            <label for="firstName" class="input-label">First Name</label>
+        </div>
+        <div class="input-container">
+            <input type="text" id="lastName" class="input-field" required>
+            <label for="lastName" class="input-label">Last Name</label>
+        </div>
+        <div class="input-container">
+            <input type="email" id="email" class="input-field" required>
+            <label for="email" class="input-label">Email</label>
+        </div>
+        <div class="input-container">
+            <input type="password" id="password" class="input-field" required>
+            <label for="password" class="input-label">Password</label>
+        </div>
+        <div class="input-container">
+            <input type="password" id="confirmPassword" class="input-field" required>
+            <label for="confirmPassword" class="input-label">Confirm Password</label>
+        </div>
+        <div class="input-container">
+            <input type="text" id="phone" class="input-field" required>
+            <label for="phone" class="input-label">Phone Number</label>
+        </div>
+
+        <button class="button" onclick="register()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>Register
+        </button>
+       
+    </div>
+
+</body>
+</html>

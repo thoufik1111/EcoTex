@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Scrolling Homepage</title>
+    <link rel="stylesheet" href="Sample.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <div id="logo-animation">
+            <img src="image/logo.png" alt="Logo">
+        </div>
+    </div>
+    <header>
+        <div class="header-left">
+            <nav class="sidebar close">
+                <header>
+                    <div class="image-text">
+                        <span class="image">
+                            <img src="image/logo.png" alt="">
+                        </span>
+
+                        <div class="text logo-text">
+                            <span class="name">ECOTEX</span>
+                            <span class="profession">AI designing</span>
+                        </div>
+                    </div>
+
+                    <i class='bx bx-chevron-right toggle'></i>
+                </header>
+
+                <div class="menu-bar">
+                    <div class="menu">
+                        <li class="search-box">
+                            <i class='bx bx-search icon'></i>
+                            <input type="text" placeholder="Search...">
+                        </li>
+
+                        <ul class="menu-links">
+                            <li class="nav-link">
+                                <a href="Abouti.html">
+                                    <i class='bx bx-bar-chart-alt-2 icon'></i>
+                                    <span class="text nav-text">About</span>
+                                </a>
+                            </li>
+                        
+                            <li class="nav-link">
+                                <a href="about.html">
+                                    <i class='bx bx-bell icon'></i>
+                                    <span class="text nav-text">Collabs</span>
+                                </a>
+                            </li>
+                        
+                            <li class="nav-link">
+                                <a href="Example2.html">
+                                    <i class='bx bx-pie-chart-alt icon'></i>
+                                    <span class="text nav-text">Sample Projects</span>
+                                </a>
+                            </li>
+                        
+                            <li class="nav-link">
+                                <a href="Tutorial.html">
+                                    <i class='bx bx-heart icon'></i>
+                                    <span class="text nav-text">Tutorial</span>
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    <div class="bottom-content">
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-log-out icon'></i>
+                                <span class="text nav-text">Logout</span>
+                            </a>
+                        </li>
+
+                        <li class="mode">
+                            <div class="sun-moon">
+                                <i class='bx bx-moon icon moon'></i>
+                                <i class='bx bx-sun icon sun'></i>
+                            </div>
+
+                            <div class="toggle-switch">
+                                <span class="switch"></span>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </nav>
+            <section class="home">
+                <div class="text">Dashboard Sidebar</div>
+            </section>
+        </div>
+        <div class="header-right">
+            <button class="start-free-trial-button" onclick="startFreeTrial()">Start Free Trial</button>
+            <button class="sign-in-button" onclick="redirectToSignIn()">Sign In</button>
+        </div>
+    </header>
+    <main>
+        <!-- Section 1: Typing Text Animation -->
+        <section id="section1" class="section">
+            <div class="container">
+                <span class="text first-text">Introducing  </span>
+                <span class="text sec-text">Freelancer</span>
+            </div>
+        </section>
+
+        <!-- Section 2: Existing Description Box -->
+        <section id="section2" class="section">
+            <div class="container">
+                <div class="instructions">
+                    <div class="description right" id="desc1">
+                        <img src="image/AI-.png">
+                        <p>Users input specific measurements into the AI system, ensuring precision for a custom-fit garment.</p>
+                    </div>
+                    <div class="description left" id="desc2">
+                        <img src="image/2Di.jpeg">
+                        <p>The AI transforms the provided measurements into a detailed 2D pattern, outlining the initial design on a flat surface.</p>
+                    </div>
+                    <div class="description right" id="desc3">
+                        <img src="image/3d.jpeg">
+                        <p>Using NLP-processed, eco-friendly measurements, the 2D pattern is elevated into a 3D model, showcasing the cloth design from all angles.</p>
+                    </div>
+                    <div class="description left" id="desc4">
+                        <img src="image/360.jpeg">
+                        <p>The 3D garment can be rotated and viewed in a 360-degree virtual space, allowing for a comprehensive examination of its fit and style.</p>
+                    </div>
+                    <div class="description right" id="desc5">
+                        <img src="image/detail.jpeg">
+                        <p>Detailed explanations of fabric type, texture, and other minute details are displayed adjacent to the 3D model for clarity and better understanding.</p>
+                    </div>
+                </div>
+                <div class="steps">
+                    <button class="step-btn" onclick="showDescription(1)">1</button>
+                    <button class="step-btn" onclick="showDescription(2)">2</button>
+                    <button class="step-btn" onclick="showDescription(3)">3</button>
+                    <button class="step-btn" onclick="showDescription(4)">4</button>
+                    <button class="step-btn" onclick="showDescription(5)">5</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Efficiency and Creativity -->
+        <section id="section3" class="section">
+            <div class="full-width">
+                <div class="left-side">
+                    <img src="image/Kurt.jpg" alt="Efficiency and Creativity Image" class="section-image">
+                </div>
+                <div class="content">
+                    <h2>Efficiency and Creativity</h2>
+                    <p>Our AI-powered textile design website combines <strong>speed</strong> and <strong>ingenuity</strong> to provide unparalleled <strong>efficiency</strong> and <strong>creativity</strong>. Leveraging state-of-the-art machine learning algorithms, our platform can generate unique, eye-catching designs in a fraction of the time it would take a human designer. Our AI ensures <strong>consistent quality</strong>, reducing the time and effort needed for revisions.</p>
+                    <p>Moreover, the <strong>creativity</strong> of our designs is unmatched. By analyzing current fashion trends and historical patterns, our AI generates innovative textile designs that are both aesthetically pleasing and trendsetting. This allows designers to stay ahead of the curve, offering clients fresh, original pieces that stand out in the market.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Portability and Flexibility -->
+        <section id="section4" class="section">
+            <div class="full-width">
+                <div class="content">
+                    <h2>Portability and Flexibility</h2>
+                    <p>Our website is built with <strong>portability</strong> and <strong>flexibility</strong> in mind. Accessible from any device with an internet connection, you can design textiles on the go—whether you're at home, in the office, or traveling. Our platform's user-friendly interface adapts seamlessly to various screen sizes, ensuring a smooth and efficient design process, no matter where you are.</p>
+                    <p>In addition, our platform's <strong>flexibility</strong> allows for <strong>customization</strong> to suit your specific needs. You can easily tweak designs, adjust parameters, and experiment with different styles without any hassle. This adaptability ensures that every design is tailored to your unique vision, making it the perfect tool for designers of all levels.</p>
+                </div>
+                <div class="right-side">
+                    <img src="image/skirt.jpg" alt="Portability and Flexibility Image" class="section-image">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>We are pioneers in eco-friendly textile designs, creating sustainable and stylish fabrics that are kind to the environment. Our commitment to quality and sustainability drives us to innovate and inspire.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>
+                    <strong>Address:</strong> 123 Green Street, Eco City, TX 75001<br>
+                    <strong>Email:</strong> <a href="mailto:info@ecofriendlytextiles.com">info@ecofriendlytextiles.com</a><br>
+                    <strong>Phone:</strong> +1 (234) 567-8900
+                </p>
+            </div>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <p>
+                    <a href="https://www.facebook.com/share/1FZsn827yf/" target="_blank"><i class="fab fa-facebook"></i></a><br>
+                    <a href="https://twitter.com/yourprofile" target="_blank"><i class="fab fa-twitter"></i></a><br>
+                    <a href="https://www.instagram.com/queen_dd26?igsh=MW90ZTV2bnkyODhmYQ==" target="_blank"><i class="fab fa-instagram"></i></a><br>
+                    <a href="https://www.linkedin.com/in/mohammed-thoufik-316956293?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to our newsletter to get the latest updates on new designs, sustainability tips, and exclusive offers.</p>
+                <form action="/subscribe" method="post">
+                    <input type="email" name="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Eco Friendly Textiles. All rights reserved. | <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+        </div>
+    </footer>    
+    <script src="Sample.js"></script>
+</body>
+</html>

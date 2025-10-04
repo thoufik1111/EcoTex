@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gentex Design Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #111, #1a1a1a);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #00ffb3;
+      text-shadow: 0 0 10px #00ffb3;
+    }
+
+    .design-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    select {
+      padding: 8px 12px;
+      font-size: 16px;
+      background: #222;
+      border: 2px solid #00ffb3;
+      color: #fff;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .compare-btn, .download-btn, .bar-chart-btn {
+      display: inline-block;
+      margin: 20px 10px;
+      padding: 12px 25px;
+      background: linear-gradient(to right, #00ffb3, #00ffa6);
+      border: none;
+      font-size: 18px;
+      color: #000;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00ffb3;
+      transition: all 0.3s ease;
+    }
+
+    .compare-btn:hover, .download-btn:hover, .bar-chart-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffb3;
+    }
+
+    .design-preview {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .design-card {
+      perspective: 1000px;
+      width: 180px;
+    }
+
+    .design-inner {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .design-card:hover .design-inner {
+      transform: rotateY(180deg);
+    }
+
+    .design-front, .design-back {
+      position: absolute;
+      width: 100%;
+      backface-visibility: hidden;
+      background: #222;
+      border: 2px solid #00ffb3;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 0 10px #00ffb3;
+    }
+
+    .design-front {
+      z-index: 2;
+    }
+
+    .design-back {
+      transform: rotateY(180deg);
+    }
+
+    .design-card img {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .badge, .recommend-tag {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #00ffb3;
+      color: #000;
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffb3;
+      font-weight: bold;
+    }
+
+    .recommend-tag {
+      top: -10px;
+      left: -10px;
+      background: #ff0;
+      color: #000;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px #ff0; }
+      50% { box-shadow: 0 0 20px #ff0; }
+      100% { box-shadow: 0 0 5px #ff0; }
+    }
+
+    .slider-container {
+      margin-top: 10px;
+    }
+
+    canvas {
+      margin-top: 40px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .progress-bar-fill {
+      height: 20px;
+      background: #00ffb3;
+      width: 0;
+      transition: width 2s ease;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Compare Your Gentex Designs</h2>
+
+<div class="design-selector">
+  <select id="designSelect1">
+    <option>Select Design 1</option>
+    <option value="Design A">Design A</option>
+    <option value="Design B">Design B</option>
+    <option value="Design C">Design C</option>
+  </select>
+  <select id="designSelect2">
+    <option>Select Design 2</option>
+    <option value="Design A">Design A</option>
+    <option value="Design B">Design B</option>
+    <option value="Design C">Design C</option>
+  </select>
+  <select id="designSelect3">
+    <option>Select Design 3 (Optional)</option>
+    <option value="Design A">Design A</option>
+    <option value="Design B">Design B</option>
+    <option value="Design C">Design C</option>
+  </select>
+</div>
+
+<div class="progress-bar" id="progressBar"><div class="progress-bar-fill" id="progressBarFill"></div></div>
+
+<div class="design-preview" id="previewContainer"></div>
+
+<button class="compare-btn" onclick="compareDesigns()">Compare</button>
+<button class="download-btn" onclick="downloadReport()">Download Report</button>
+<button class="bar-chart-btn" onclick="toggleBarChart()">Show Design Analysis</button>
+
+<canvas id="comparisonChart" width="800" height="400"></canvas>
+
+<script>
+  const designData = {
+    "Design A": { colorScore: 75, ecoScore: 85, wastage: 20, outlook: 4, image: "https://via.placeholder.com/150/00ffb3/000?text=Design+A" },
+    "Design B": { colorScore: 60, ecoScore: 70, wastage: 35, outlook: 3, image: "https://via.placeholder.com/150/ff66cc/000?text=Design+B" },
+    "Design C": { colorScore: 90, ecoScore: 95, wastage: 15, outlook: 5, image: "https://via.placeholder.com/150/3399ff/000?text=Design+C" }
+  };
+
+  function compareDesigns() {
+    document.getElementById('progressBar').style.display = 'block';
+    document.getElementById('progressBarFill').style.width = '0';
+    setTimeout(() => document.getElementById('progressBarFill').style.width = '100%', 100);
+
+    setTimeout(() => {
+      const d1 = document.getElementById('designSelect1').value;
+      const d2 = document.getElementById('designSelect2').value;
+      const d3 = document.getElementById('designSelect3').value;
+      const selected = [d1, d2, d3].filter(v => v && !v.includes("Select"));
+
+      const scores = selected.map(d => {
+        const s = designData[d];
+        return { name: d, total: s.colorScore + s.ecoScore - s.wastage };
+      });
+      const best = scores.reduce((a, b) => (a.total > b.total ? a : b), scores[0]);
+
+      const labels = selected;
+      const outlook = selected.map(d => designData[d].outlook);
+      const wastages = selected.map(d => designData[d].wastage);
+      const material = selected.map(d => designData[d].ecoScore);
+      const aiRating = selected.map(d => Math.round((designData[d].ecoScore + designData[d].outlook * 10 - designData[d].wastage) / 2));
+
+      updatePreview(selected, best.name);
+      const ctx = document.getElementById('comparisonChart').getContext('2d');
+      if (window.barChart) window.barChart.destroy();
+
+      window.barChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Outlook', 'Wastage %', 'Material', 'AI Rating'],
+          datasets: selected.map((d, i) => ({
+            label: d,
+            data: [outlook[i], wastages[i], material[i], aiRating[i]],
+            fill: true,
+            backgroundColor: `rgba(${50 + i*50}, ${200 - i*50}, ${150 + i*20}, 0.4)`,
+            borderColor: `rgba(${50 + i*50}, ${200 - i*50}, ${150 + i*20}, 1)`
+          }))
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "white" } } },
+          scales: { r: { angleLines: { color: 'gray' }, pointLabels: { color: 'white' }, ticks: { color: 'white' } } }
+        }
+      });
+    }, 2200);
+  }
+
+  function updatePreview(designList, bestName) {
+    const container = document.getElementById('previewContainer');
+    container.innerHTML = '';
+    designList.forEach(name => {
+      const data = designData[name];
+      const outer = document.createElement('div');
+      outer.className = 'design-card';
+      const inner = document.createElement('div');
+      inner.className = 'design-inner';
+      const front = document.createElement('div');
+      front.className = 'design-front';
+      front.innerHTML = `<img src="${data.image}" alt="${name}" /><strong>${name}</strong>` + (name === bestName ? '<div class="badge">Best</div>' : '') + (data.ecoScore > 85 ? '<div class="recommend-tag">Recommended</div>' : '');
+      const back = document.createElement('div');
+      back.className = 'design-back';
+      back.innerHTML = `Eco Score: ${data.ecoScore}<br>Budget: Medium<br>Material: Sustainable<br>Outlook: ${data.outlook}/5<br>`;
+      inner.appendChild(front);
+      inner.appendChild(back);
+      outer.appendChild(inner);
+      container.appendChild(outer);
+    });
+  }
+
+  function downloadReport() {
+    html2canvas(document.body).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jspdf.jsPDF('l', 'pt', 'a4');
+      pdf.addImage(imgData, 'PNG', 10, 10, 800, 500);
+      pdf.save("Gentex_Comparison_Report.pdf");
+    });
+  }
+
+  function toggleBarChart() {
+    document.getElementById('comparisonChart').style.display = document.getElementById('comparisonChart').style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>

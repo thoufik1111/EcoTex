@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ECOTEX Animation</title>
+  <style>
+    body {
+      opacity: 0;
+      margin: 0;
+      background: #000;
+      color: #03f484;
+      font-family: monospace;
+      overflow: hidden;
+    }
+    .main {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .main div {
+      position: absolute;
+      white-space: pre;
+      font-size: 24px;
+    }
+    .footer {
+      opacity: 0;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color:#03f484;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+<div class="main">ECOTEX</div>
+<div class="footer">An AI Designer</div>
+
+<script>
+  const main = document.querySelector('.main');
+  const text = main.textContent.trim();
+  main.textContent = '';
+
+  for (let i = 0; i < 83; i++) {
+    for (let j = 0; j < text.length; j++) {
+      const span = document.createElement('div');
+      span.textContent = text[j];
+      main.appendChild(span);
+    }
+  }
+
+  const chars = main.querySelectorAll('div');
+
+  const w = window.innerWidth;
+  const h = document.body.clientHeight + 150;
+  const r = w / h;
+  const m = Math.floor(w / 30);
+  const nbrx = Math.floor(w / m);
+
+  gsap.set("body", { autoAlpha: 1 });
+  gsap.set(chars, { opacity: 0 });
+  gsap.set(chars, {
+    x: function(i){ return (i % 11) * 10 - 50 }
+  });
+
+  const tl = gsap.timeline({ delay: 2, repeat: -1 });
+
+  // 1 — Spindle spiral
+  tl.to(chars, {
+    opacity: 1,
+    x: function(i){ return (i/2 + 10) * Math.cos(i * 5) },
+    y: function(i){ return (i/2 + 10) * Math.sin(i * 5) },
+    scale: function(i){ return 0.5 + i / 500 },
+    ease: "elastic.out(1.2, 0.5)",
+    duration: 3,
+    stagger: 0.005
+  }, "-=0.1");
+
+  // 2 — Grid Layout
+  tl.to(chars, {
+    x: function(i){ return i % nbrx * m - w / 2 + m / 2 },
+    y: function(i){ return m / r + Math.floor(i / nbrx) * m / r - h / 2 },
+    scale: function(i){ return 1 + i / 500 },
+    ease: "power2",
+    duration: 3,
+    stagger: -0.01
+  }, "-=0.5");
+
+  // 3 — Random explosion
+  tl.to(chars, {
+    x: function(i){ return "+=" + gsap.utils.random(-i * 10 - 200, i * 10 + 200, 5) },
+    y: function(i){ return "+=" + gsap.utils.random(-i * 10 - 100, i * 10 + 100, 5) },
+    rotation: 360,
+    ease: "ease",
+    duration: 3,
+    stagger: 0.005
+  }, "+=1");
+
+  // 4 — Back to Spindle spiral
+  tl.to(chars, {
+    opacity: 1,
+    x: function(i){ return (i/2 + 20) * Math.cos(i * 5) },
+    y: function(i){ return (i/2 + 20) * Math.sin(i * 5) },
+    scale: function(i){ return 0.5 + i / 500 },
+    ease: "power4.out",
+    duration: 3,
+    stagger: 0.005
+  }, "+=0.1");
+
+  // 5 — Full rotation
+  tl.to(main, {
+    rotation: 360,
+    ease: "power.in",
+    duration: 8
+  });
+
+  // 6 — Final clean ECOTEX display
+  tl.to(chars, {
+    opacity: function(i){ return (i < 6) ? 1 : 0 },
+    x: function(i){
+      if (i < 6) {
+        const spacing = 50;
+        return (i - 3) * spacing; // center around (0,0)
+      } else {
+        return 0;
+      }
+    },
+    y: 0,
+    scale: 1.5,
+    ease: "elastic",
+    duration: 2,
+    stagger: 0.005
+  }, "-=7.5");
+
+  // Credit fade
+  tl.to(main, { opacity: 0 }, "+=2");
+  tl.to('.footer', { opacity: 1, duration: 1 });
+  tl.to('.footer', { opacity: 0, duration: 1 }, "+=2");
+  tl.to(main, { opacity: 1, duration: 2 }, "-=0.5");
+
+  // After everything is done, redirect to Sample.html
+  tl.to(main, { opacity: 0, duration: 1 }); // Ensure ECOTEX disappears before redirection
+  tl.to('.footer', { opacity: 0, duration: 1 });
+
+  tl.add(() => {
+    // Redirect to Sample.html after animation
+    window.location.href = 'Sample.html';
+  }, "+=1");
+
+</script>
+
+</body>
+</html>

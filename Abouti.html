@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gentex | Multi-Layer Parallax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #130d0a;
+      font-family: 'Playfair Display', serif;
+      color: #03f484;
+    }
+
+    #hero {
+      height: 800px;
+      overflow: hidden;
+      position: relative;
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+
+    #content {
+      background-color: #130d0a;
+      padding: 50px 20px;
+    }
+
+    .layer {
+      background-position: bottom center;
+      background-size: auto;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 800px;
+      position: fixed;
+      z-index: -1;
+      min-height: 800px;
+    }
+
+    .layer-bg {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_bg.jpg');
+    }
+
+    .layer-1 {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_03.png');
+      background-position: left bottom;
+    }
+
+    .layer-2 {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_02.png');
+    }
+
+    .layer-3 {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_man.png');
+      background-position: right bottom;
+    }
+
+    .layer-overlay {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_overlay.png');
+    }
+
+    .layer-4 {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_01.png');
+    }
+
+    .first-section {
+      padding: 50px 0 20px 0;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 120%;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: #03f484;
+    }
+
+    p {
+      color: #03f484;
+      font-size: 18px;
+      line-height: 150%;
+      margin-bottom: 20px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .layer-1 {
+        background-position: 26% bottom;
+      }
+      .layer-3 {
+        background-position: 35% bottom;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="hero">
+    <div class="layer-bg layer parallax" data-depth="0.10"></div>
+    <div class="layer-1 layer parallax" data-depth="0.20"></div>
+    <div class="layer-2 layer parallax" data-depth="0.50"></div>
+    <div class="layer-3 layer parallax" data-depth="0.80"></div>
+    <div class="layer-overlay layer parallax" data-depth="0.85"></div>
+    <div class="layer-4 layer parallax" data-depth="1.00"></div>
+  </div>
+
+ <div id="content">
+  <section class="first-section">
+    <div>
+      <h1>About Ecotex AI Textile Design Studio</h1>
+    </div>
+    <div>
+      Where Conscious Design Meets Artificial Intelligence<br><br>
+          In a world of fast fashion and mounting fabric waste, Gentex was born with a revolutionary mission: to bring sustainability, intelligence, and creativity under one digital roof. Gentex isn’t just a platform — it’s an ecosystem that listens to your ideas, transforms them into dynamic 3D visual designs, and ensures your fashion is as sustainable as it is stunning.<br><br>
+          “We don’t just design clothes — we design the future of fashion.”<br><br>
+          💡 <b>Innovation:</b> From text-to-design AI rendering to 360° real-time visual simulation, we blur the line between concept and creation.<br>
+          🌿 <b>Sustainability:</b> Eco-score metrics, fabric impact reports, and smart suggestions help every user make greener choices.<br>
+          🎨 <b>Customization:</b> Whether you’re a solo designer or a global brand, Gentex tailors designs and subscriptions to fit you.<br><br>
+          <b>Our Vision:</b> To redefine fashion through the lens of sustainability, powered by AI and accessible to all. We believe the next generation of designers won’t just sketch — they’ll simulate, analyze, and innovate. Gentex is the bridge between artistic imagination and environmental responsibility.
+        </p>
+      <p>Our platform allows designers, brands, and enthusiasts to generate stunning 3D textile concepts with AI-driven precision, reducing material waste and promoting sustainable practices in the fashion and fabric industry.</p>
+      <p>At Gentex, creativity knows no bounds. Whether you seek intricate patterns, unique fabric simulations, or smart material suggestions, our AI engine is crafted to bring your ideas to life seamlessly.</p>
+      <p>Join us in revolutionizing the future of textile design — smarter, greener, and infinitely more imaginative.</p>
+    </div>
+  </section>
+</div>
+
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    gsap.utils.toArray(".parallax").forEach(layer => {
+      const depth = layer.dataset.depth;
+      const movement = -(layer.offsetHeight * depth);
+      tl.to(layer, { y: movement, ease: "none" }, 0);
+    });
+  </script>
+
+</body>
+</html>

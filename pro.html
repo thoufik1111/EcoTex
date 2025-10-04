@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gentex Main Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Merriweather', serif;
+      background: linear-gradient(135deg, #141e30, #2a6c56);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    @keyframes fadeInBottom {
+      0% {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      animation: fadeInBottom 1s ease-out forwards;
+      position: relative;
+    }
+
+    .home-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #03f484;
+      margin-right: 1rem;
+    }
+
+    .home-icon:hover {
+      color: #00cc88;
+    }
+
+    .username {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #03f484;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #ffffff;
+      cursor: pointer;
+      box-shadow: 0 0 5px #03f484, 0 0 25px #03f484;
+    }
+
+    .profile-icon:hover {
+      background-color: #f0f0f0;
+      box-shadow: 0 0 10px #03f484, 0 0 35px #03f484;
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      max-width: 800px;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .box {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      color: white;
+      opacity: 0;
+      animation: fadeInBottom 1s ease-out forwards;
+    }
+
+    .box:nth-child(1) { animation-delay: 1.2s; }
+    .box:nth-child(2) { animation-delay: 1.4s; }
+    .box:nth-child(3) { animation-delay: 1.6s; }
+    .box:nth-child(4) { animation-delay: 1.8s; }
+
+    .box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(3, 244, 132, 0.4), 0 0 12px rgba(3, 244, 132, 0.3);
+    }
+
+    .box h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.3rem;
+      color: #03f484;
+    }
+
+    .icon-circle {
+      width: 40px;
+      height: 40px;
+      background-color: #03f484;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      box-shadow: 0 0 5px #03f484, 0 0 15px #03f484;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .icon-circle:hover {
+      transform: scale(1.25);
+      box-shadow: 0 0 10px #03f484, 0 0 25px #03f484, 0 0 40px #03f484;
+    }
+
+    #profileModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      color: #2a6c56;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .modal-content button {
+      padding: 0.5rem 1rem;
+      background-color: #03f484;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 5px #03f484, 0 0 15px #03f484;
+    }
+
+    .modal-content button:hover {
+      background-color: #00cc88;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="home-icon" onclick="goHome()">🏠</div>
+    <div class="username" id="displayUsername">Hello, Guest</div>
+    <div class="profile-icon" onclick="editProfile()">
+      <span>👤</span>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class="box">
+      <h2>Design Page</h2>
+      <div class="icon-circle">🎨</div>
+    </div>
+    <div class="box">
+      <h2>Saved Designs</h2>
+      <div class="icon-circle">📁</div>
+    </div>
+    <div class="box">
+      <h2>Validity</h2>
+      <div class="icon-circle">✅</div>
+    </div>
+    <div class="box">
+      <h2>How to design?</h2>
+      <div class="icon-circle">🎥</div>
+    </div>
+  </div>
+
+  <div id="profileModal">
+    <div class="modal-content">
+      <h3>Edit Profile</h3>
+      <input type="text" id="usernameInput" placeholder="Enter username" />
+      <input type="email" id="emailInput" placeholder="Enter email" />
+      <button onclick="saveProfile()">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    function editProfile() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function saveProfile() {
+      const username = document.getElementById('usernameInput').value;
+      if (username) {
+        document.getElementById('displayUsername').innerText = `Hello, ${username}`;
+      }
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function goHome() {
+      window.location.href = 'Sample.html';
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('profileModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    document.querySelectorAll('.box').forEach((box, index) => {
+      box.onclick = () => {
+        switch(index) {
+          case 0: window.location.href = 'Mainpg.html'; break;
+          case 1: window.location.href = 'Saveddes.html'; break;
+          case 2: window.location.href = 'validity.html'; break;
+          case 3: window.location.href = 'Tutorial.html'; break;
+        }
+      };
+    });
+  </script>
+</body>
+</html>

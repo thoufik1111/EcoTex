@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecotex Website</title>
+  <link rel="stylesheet" href="Mainpg.css">
+</head>
+<body>
+  <div id="loading-screen">
+    <div id="logo-animation">
+      <img src="image/logo.png" alt="Logo">
+    </div>
+  </div>
+
+  <!-- Header Section -->
+
+ <header>
+  <div class="logo-container">
+    <img src="image/logo.png" alt="Logo" id="site-logo">
+  </div>
+  <nav class="main-nav">
+    <a id="profileBtn" href="javascript:void(0)">Profile</a>
+    <a id="savedDesignsBtn" href="javascript:void(0)">Saved Designs</a>
+    <a id="helpCenterBtn" href="javascript:void(0)">Help Center</a>
+  </nav>
+</header>
+
+  <!-- Main Content Section -->
+
+  <div class="container">
+    <!-- Sidebar Section -->
+    <aside>
+      <label for="clothType">Cloth Type:</label>
+      <select id="clothType" class="sidebar-input">
+        <option>Cotton</option>
+        <option>Silk</option>
+        <option>Linen</option>
+        <option>Polyester</option>
+        <option>Wool</option>
+        <option>Nylon</option>
+        <option>Rayon</option>
+        <option>Leather</option>
+        <option>Satin</option>
+        <option>Denim</option>
+      </select>
+
+```
+  <label for="material">Material Composition:</label>
+  <input type="text" id="material" class="sidebar-input" placeholder="e.g. 50% Cotton, 50% Silk">
+
+  <label for="designPreferences">Design Preferences:</label>
+  <input type="color" id="designPreferences" class="sidebar-input">
+
+  <label for="purpose">Usage Purpose:</label>
+  <select id="purpose" class="sidebar-input">
+    <option>Casual Wear</option>
+    <option>Sportswear</option>
+    <option>Formal Wear</option>
+    <option>Party Wear</option>
+    <option>Outdoor Wear</option>
+    <option>Workwear</option>
+    <option>Beachwear</option>
+    <option>Activewear</option>
+    <option>Traditional Wear</option>
+    <option>Winter Wear</option>
+  </select>
+
+  <label for="eco">Sustainable Options:</label>
+  <input type="checkbox" id="eco"> Use eco-friendly materials
+
+  <!-- Separated the alignment for Budget Range -->
+  <div class="budget-section">
+    <label for="budget">Budget Range:</label>
+    <input type="range" id="budget" class="sidebar-input" min="0" max="10000">
+    <p>Current Budget: <span id="budgetValue">5000</span></p>
+  </div>
+
+  <button id="submitButton" class="glitter-button">Submit</button>
+</aside>
+
+<!-- Main Panel Section -->
+<main>
+  <div class="card">
+    <div class="preview-box">
+      <p id="preview-message">3D Design Preview</p>
+      <div id="loading-animation" class="loading-spinner" style="display:none;"></div>
+    </div>
+    <div class="flex">
+      <button id="edit-colors" class="glitter-button">Edit Colors</button>
+      <button id="edit-patterns" class="glitter-button">Edit Patterns</button>
+    </div>
+    <div>
+      <p id="wastage">Wastage Calculation: 15% reduction</p>
+      <p id="eco-score">Eco Score: 85/100</p>
+    </div>
+    <div>
+      <button id="ai-recommendations" class="glitter-button">AI Recommendations</button>
+    </div>
+  </div>
+</main>
+
+<!-- Sidebar Tools Section -->
+<aside>
+  <button id="edit-design" class="glitter-button">Edit Design</button>
+  <button id="compare-designs" class="glitter-button"onclick="startcomp()">Compare Designs</button>
+  <button id="download" class="glitter-button">Download</button>
+</aside>
+```<!-- Edit Design Popup -->
+<div id="editDesignModal" class="modal">
+  <div class="modal-content large-editor">
+    <span id="closeEditDesign" class="close">&times;</span>
+    <h2>Edit Design</h2>
+    <div class="editor-container">
+      <div id="designCanvas" class="design-canvas">
+        <p id="design-preview-copy">[AI Design Preview Here]</p>
+      </div>
+      <div class="editor-tools">
+        <button id="moveTool">Move</button>
+        <button id="scaleTool">Scale</button>
+        <button id="rotateTool">Rotate</button>
+        <input type="color" id="colorTool" />
+        <button id="drawTool">Draw</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Footer Section -->
+
+  <footer>
+    <p>Access premium features by subscribing</p>
+  </footer>
+  <script src="Mainpg.js"></script>
+</body>
+</html>
+
+<!-- Profile Modal -->
+
+<div id="profileModal" class="modal">
+  <div class="modal-content profile-modal-content">
+    <span id="closeProfile" class="close">&times;</span>
+    <div class="profile-container">
+      <div class="profile-left">
+        <img src="profile-photo.jpg" alt="Profile Photo" class="profile-photo">
+        <h2>Mohammed Thoufik</h2>
+      </div>
+      <div class="profile-right">
+        <p><strong>Designs Made:</strong> 27</p>
+        <p><strong>Hours Spent:</strong> 134 hrs</p>
+        <p><strong>Validity Left:</strong> 15 days</p>
+        <p><strong>Saved Designs:</strong> 11</p>
+        <p><strong>Subscription:</strong> Premium</p>
+        <p><strong>Member Since:</strong> Jan 2025</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Help Center Modal -->
+
+<div id="helpCenterModal" class="modal">
+  <div class="modal-content help-modal-content">
+    <span id="closeHelpCenter" class="close">&times;</span>
+    <h2>Help Center</h2>
+    <div class="faq">
+      <div class="question">
+        <h3>How to edit a design?</h3>
+        <p>Go to 'Saved Designs', select your design, and click 'Edit'.</p>
+      </div>
+      <div class="question">
+        <h3>Can I upgrade my subscription?</h3>
+        <p>Yes — visit the profile section and choose 'Upgrade'.</p>
+      </div>
+    </div>
+    <div class="question-bar">
+      <input type="text" placeholder="Type your question here...">
+      <button>Ask</button>
+    </div>
+  </div>
+</div>
+
+<!-- Place this at the end of your main page body -->
+<div class="anime-bot">
+  <div class="bot-message" id="bot-message">Welcome Chief lets start our work 🤘</div>
+  <img id="bot-img" src="image/AIbot.jpg" alt="Anime Bot">
+</div>

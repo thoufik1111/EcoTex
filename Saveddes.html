@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Saved Designs</title>
+  <style>
+    :root {
+      --dark-bg: #0f1116;
+      --primary: #20c997;
+      --text: #ffffff;
+      --light-gray: #2b2e36;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      display: flex;
+      height: 100vh;
+      background: var(--dark-bg);
+      color: var(--text);
+    }
+    .sidebar {
+      width: 25%;
+      background: var(--light-gray);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--primary);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .upload-btn {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .main {
+      width: 75%;
+      padding: 2rem;
+    }
+    .top-bar {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .menu-button {
+      padding: 0.5rem 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-options {
+      display: none;
+      position: absolute;
+      top: 40px;
+      background: var(--light-gray);
+      border-radius: 5px;
+      min-width: 150px;
+      z-index: 100;
+    }
+    .menu-options button {
+      width: 100%;
+      padding: 0.5rem;
+      background: none;
+      color: white;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+    .menu-options button:hover {
+      background: var(--primary);
+    }
+    .designs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .folder {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 1rem;
+      width: calc(33.33% - 1rem);
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+    }
+    .folder h3 {
+      margin-top: 0.5rem;
+    }
+    .bin {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      cursor: pointer;
+    }
+    .expanded {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 75%;
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 2rem;
+      z-index: 100;
+    }
+    #recentlyDeleted {
+      display: none;
+      margin-top: 2rem;
+    }
+    .view-large .folder { width: calc(33.33% - 1rem); }
+    .view-small .folder { width: calc(20% - 1rem); }
+    .view-list { flex-direction: column; }
+    .view-list .folder { width: 100%; text-align: left; }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="profile-photo">
+      <img id="profileImage" src="https://via.placeholder.com/150" alt="User">
+      <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="updateProfileImage(event)">
+      <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Upload</button>
+    </div>
+    <div class="profile-info">
+      <h2>John Doe</h2>
+      <p>john@example.com</p>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <div style="position: relative;">
+        <button class="menu-button" onclick="toggleMenu('viewMenu')">View ▼</button>
+        <div id="viewMenu" class="menu-options">
+          <button onclick="changeView('view-large')">Large Icon</button>
+          <button onclick="changeView('view-small')">Small Icon</button>
+          <button onclick="changeView('view-list')">List</button>
+        </div>
+      </div>
+
+      <div style="position: relative;">
+        <button class="menu-button" onclick="toggleMenu('sortMenu')">Sort ▼</button>
+        <div id="sortMenu" class="menu-options">
+          <button onclick="sortDesigns('asc')">Ascending</button>
+          <button onclick="sortDesigns('desc')">Descending</button>
+        </div>
+      </div>
+
+      <button class="menu-button" onclick="toggleRecentlyDeleted()">Recently Deleted</button>
+    </div>
+
+    <div class="designs view-large" id="designContainer">
+      <div class="folder" onclick="expandDesign(this)"><span class="bin" onclick="deleteDesign(event, this)">🗑️</span><h3>Alpha</h3></div>
+      <div class="folder" onclick="expandDesign(this)"><span class="bin" onclick="deleteDesign(event, this)">🗑️</span><h3>Beta</h3></div>
+      <div class="folder" onclick="expandDesign(this)"><span class="bin" onclick="deleteDesign(event, this)">🗑️</span><h3>Gamma</h3></div>
+      <div class="folder" onclick="expandDesign(this)"><span class="bin" onclick="deleteDesign(event, this)">🗑️</span><h3>Delta</h3></div>
+    </div>
+
+    <div id="expandedView" class="expanded">
+      <button onclick="closeExpanded()">Close ❌</button>
+      <h2>Full Design View</h2>
+    </div>
+
+    <div id="recentlyDeleted">
+      <h2>Recently Deleted</h2>
+      <div class="designs" id="deletedContainer"></div>
+    </div>
+  </div>
+
+<script>
+  function updateProfileImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => document.getElementById('profileImage').src = reader.result;
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function toggleMenu(id) {
+    const menus = document.querySelectorAll('.menu-options');
+    menus.forEach(m => m.style.display = 'none');
+    const menu = document.getElementById(id);
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function changeView(viewClass) {
+    const container = document.getElementById('designContainer');
+    container.className = 'designs ' + viewClass;
+  }
+
+  function sortDesigns(type) {
+    const container = document.getElementById('designContainer');
+    const designs = Array.from(container.children);
+    designs.sort((a, b) => {
+      let nameA = a.querySelector('h3').innerText.toUpperCase();
+      let nameB = b.querySelector('h3').innerText.toUpperCase();
+      return type === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    });
+    container.innerHTML = '';
+    designs.forEach(d => container.appendChild(d));
+  }
+
+  function expandDesign(folder) {
+    document.getElementById("expandedView").style.display = "block";
+  }
+
+  function closeExpanded() {
+    document.getElementById("expandedView").style.display = "none";
+  }
+
+  function deleteDesign(event, binIcon) {
+    event.stopPropagation();
+    const deletedContainer = document.getElementById('deletedContainer');
+    deletedContainer.appendChild(binIcon.parentElement);
+  }
+
+  function toggleRecentlyDeleted() {
+    const section = document.getElementById("recentlyDeleted");
+    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+  }
+
+  window.onclick = function(e) {
+    if (!e.target.matches('.menu-button')) {
+      document.querySelectorAll('.menu-options').forEach(menu => menu.style.display = 'none');
+    }
+  }
+</script>
+
+</body>
+</html>

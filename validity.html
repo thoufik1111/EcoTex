@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gentex Validity Tracker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1d2b64, #f8cdda);
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      background-color: #111;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #03f484;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .buttons {
+      margin: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: transparent;
+      border: 2px solid #03f484;
+      color: #03f484;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #03f484;
+      color: #000;
+      box-shadow: 0 0 10px #03f484;
+      transform: scale(1.05);
+    }
+
+    #countdown {
+      font-size: 36px;
+      margin-top: 30px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .warning {
+      color: red;
+      text-shadow: 0 0 10px red;
+      animation: pulse 1.5s infinite;
+    }
+
+    #tips {
+      margin-top: 30px;
+      font-style: italic;
+      color: #f0f0f0;
+      opacity: 0.8;
+    }
+
+    .popup {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #222;
+      border: 2px solid #03f484;
+      padding: 20px;
+      display: none;
+      z-index: 999;
+      border-radius: 10px;
+    }
+
+    .popup input {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .popup button {
+      background: #03f484;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #history {
+      margin-top: 30px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #history h3 {
+      color: #03f484;
+    }
+
+    .log-entry {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    /* Gentex Background Style */
+    .gentex-background {
+      background: linear-gradient(to right, #0c0e16e8, #461826);
+      animation: gentexBackground 6s infinite;
+    }
+
+    @keyframes gentexBackground {
+      0% { background: linear-gradient(to right, #0c1121ae, #461826); }
+      50% { background: linear-gradient(to right, #461826, #0c0e16e1); }
+      100% { background: linear-gradient(to right, #101428ae, #461826); }
+    }
+
+  </style>
+</head>
+<body class="gentex-background">
+
+  <header>
+    Gentex Validity Tracker
+  </header>
+
+  <div id="countdown">Loading...</div>
+
+  <div class="buttons">
+    <button onclick="location.href='freetrial.html'">Add Validity</button>
+    <button onclick="showPopup('seize')">Seize Validity</button>
+    <button onclick="showPopup('restore')">Restore Validity</button>
+  </div>
+
+  <div id="tips">Tip: Upgrade to Premium before your plan expires!</div>
+
+  <div class="popup" id="popup">
+    <p id="popupMsg">Enter 8-digit password:</p>
+    <input type="password" id="popupInput" maxlength="8" />
+    <button onclick="submitPassword()">Submit</button>
+  </div>
+
+  <div id="history">
+    <h3>Action History</h3>
+    <div id="historyLog"></div>
+  </div>
+
+  <script>
+    let expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 5); // 5 days from now
+    let validityActive = true;
+    let currentAction = '';
+
+    function updateCountdown() {
+      const now = new Date();
+      const distance = expiryDate - now;
+
+      const months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
+      const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const countdown = document.getElementById("countdown");
+
+      if (distance <= 0 || !validityActive) {
+        countdown.innerHTML = "Your package is currently stopped";
+        countdown.classList.remove("warning");
+        return;
+      }
+
+      countdown.innerHTML = `Plan expires in ${months}M ${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+      if (distance < 86400000) { // less than 1 day
+        countdown.classList.add("warning");
+      } else {
+        countdown.classList.remove("warning");
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    function showPopup(action) {
+      currentAction = action;
+      document.getElementById("popup").style.display = "block";
+    }
+
+    function submitPassword() {
+      const input = document.getElementById("popupInput").value;
+      const popup = document.getElementById("popup");
+      const msg = document.getElementById("popupMsg");
+
+      if (currentAction === 'seize' && input === "87654321") {
+        validityActive = false;
+        logAction("Package Seized");
+        alert("Your package is currently stopped");
+        popup.style.display = "none";
+      } else if (currentAction === 'restore' && input === "87654321") {
+        validityActive = true;
+        expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 5);
+        logAction("Package Restored");
+        alert("Restored Successfully");
+        popup.style.display = "none";
+      } else {
+        alert("Incorrect Password");
+      }
+
+      document.getElementById("popupInput").value = "";
+    }
+
+    function logAction(action) {
+      const now = new Date();
+      const timeStr = now.toLocaleString();
+      const logDiv = document.getElementById("historyLog");
+      const entry = document.createElement("div");
+      entry.className = "log-entry";
+      entry.textContent = `${timeStr} - ${action}`;
+      logDiv.prepend(entry);
+    }
+  </script>
+</body>
+</html>

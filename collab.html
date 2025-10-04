@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anime Assistant Switcher</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .anime-bot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      text-align: center;
+    }
+
+
+    .anime-bot img {
+      width: 120px;
+      height: 160px;
+      object-fit: cover;
+      transition: 0.4s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .bot-message {
+      background: #26d47a;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 8px;
+      font-family: sans-serif;
+      font-size: 14px;
+      bottom: 50px;
+      position: relative;
+      max-width: 180px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bot-message::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #26d47a transparent transparent transparent;
+    }
+
+    .change-btn {
+      position: fixed;
+      bottom: 350px;
+      right: 30px;
+      padding: 10px 20px;
+      background: #ff4c60;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease;
+    }
+
+    .change-btn:hover {
+      background: #e0384d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="anime-bot">
+  <div class="bot-message" id="bot-message">Yo buddy 🤘</div>
+  <img id="bot-img" src="image/AIbot.jpg" alt="Anime Bot">
+</div>
+
+<button class="change-btn" onclick="changeBot()">Change Assistant</button>
+
+<script>
+  // Image and message arrays
+  const botImages = [
+    "image/AIbot.jpg",
+    "image/AIbot3.jpg",
+    "image/AIbot4.jpg",
+    "image/AIbot1.jpg"
+  ];
+
+  const botMessages = [
+    "Yo buddy 🤘",
+    "Can you try other designs 😶",
+    "Looks cool, right? 👌",
+    "Waiting for your next move 😏"
+  ];
+
+  let currentIndex = 0;
+
+  function changeBot() {
+    // Move to next index
+    currentIndex = (currentIndex + 1) % botImages.length;
+
+    // Update image and message
+    document.getElementById("bot-img").src = botImages[currentIndex];
+    document.getElementById("bot-message").innerText = botMessages[currentIndex];
+  }
+</script>
+
+</body>
+</html>
+"image/AIbot.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot1.jpg",
+  "image/AIbot2.jpg",
+  "image/AIbot.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot1.jpg",
+  "image/AIbot8.jpg",
+  "image/AIbot.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot8.jpg",
+  "image/AIbot7.jpg",
+  "image/AIbot6.jpg",
+  "image/AIbot5.jpg",
+  "image/AIbot6.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot7.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot.jpg",
+  "image/AIbot3.jpg",
+  "image/AIbot4.jpg",
+  "image/AIbot5.jpg"
+
+  "Try other materials too  🤗",
+  "Can you try other designs 😶",
+  "Awesome Chief! It was one of your best design 🔥",
+  "If you change some patterns it will be great ✌️",
+  "No the design doesn't looks good 🙃",
+  "Try Changing the colour and budget range 😅",
+  "Chief it was a good one 🚀",
+  "Oooh this one’s got potential 😍",
+  "Are you leaving for real?",
+  "Not bad, but I know you can do better 😉",
+  "Yasss, now that's the energy I’m talking about 🔥",
+  "Why not mix Cotton and Linen for that Casual Wear combo? So fresh 🌿",
+  "Beachwear in Rayon sounds breezy and fun 🌴",
+  "Leather for Party Wear? Omg yes, total baddie move 🔥",
+  "Meh… it’s missing a little magic ✨",
+  "Alright alright, you got my attention now 👏",
+  "Wool for Beachwear? Please don’t. Save yourself from the heatstroke 🥵",
+  "It looks trash imagine this with a bold pop of colour 🎨",
+  "Cotton's always a safe pick, but have you tried Satin for a little glam? ✨",
+  "Silk would be perfect if you're aiming for Party Wear vibes 😍",
+  "Linen screams Casual Wear — light, breezy, and cool 😎",
+  "Polyester for Sportswear? Smart move, but maybe check out Nylon too 👌",
+  "Wool for Winter Wear? Cozyyy! Love that ❄️🔥",
+  "Leather for Outdoor Wear? Now that’s a bold statement 😏",
+  "Not your best, but you’re getting warmer 🔥",
+  "Love where you're going, but swap Polyester for Nylon in Sportswear — trust me 😉",
+  "Maybe ditch Leather for Casual Wear and go for Cotton. More chill, less sweaty 😅",
+  "Hmm… it’s okay, but needs a little drama 💥",
+  "Are you leaving for real?"

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textile Design Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #141e30, #2a6c56);
+      overflow-x: hidden;
+      color: #ffffff;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      transition: all 0.8s ease;
+    }
+
+    section img {
+      width: 350px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    section h2 {
+      font-size: 48px;
+      margin: 30px 0 10px;
+      opacity: 0;
+      animation: fadeInUp 1.2s ease forwards 0.3s;
+    }
+
+    section p {
+      font-size: 20px;
+      color:  #03f484;
+      max-width: 600px;
+      opacity: 0;
+      animation: fadeInUp 1.2s ease forwards 0.5s;
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 14px 36px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 1.2s ease forwards 0.7s;
+    }
+
+    .btn:hover {
+       background: #03f484;
+            color: #fff;
+            border-radius: 50px;
+            box-shadow: 0 0 5px #03f484, 0 0 25px #03f484, 0 0 50px #03f484, 0 0 100px #03f484;}
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <section style="background:#2a6c56">
+    <img src="image/OIP.jpeg" alt="Design 1">
+    <h2>Floral Elegance</h2>
+    <p>Elegant AI-generated floral textile pattern for modern collections.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+
+  <section style="background: #141e30">
+    <img src="image/OI.jpg" alt="Design 2">
+    <h2>Tribal Fusion</h2>
+    <p>Vibrant tribal fusion textile with eco-friendly dye palettes.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+
+  <section style="background:#2a6c56">
+    <img src="image/Nature.jpg" alt="Design 3">
+    <h2>Minimal Lines</h2>
+    <p>Clean minimalistic patterns for luxury fashion textiles.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+
+  <section style="background: #141e30">
+    <img src="image/minimal.jpg" alt="Design 4">
+    <h2>Nature Palette</h2>
+    <p>Inspired by nature's colors, ideal for eco-sustainable wearables.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+  <section style="background:#2a6c56">
+    <img src="image/rustic.png" alt="Design 5">
+      <h2>Rustic Charm</h2>
+    <p>Earthy tones and organic textures, radiating warmth and heritage.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+  <section style="background: #141e30">
+    <img src="image/folk.jpeg" alt="Design 6">
+      <h2>Folk floral</h2>
+    <p>bold motifs meet rich tradition in a vibrant, floral tapestry.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+  
+  <section style="background:#2a6c56">
+    <img src="image/animal.jpeg" alt="Design 8">
+      <h2>Floral Waves</h2>
+    <p>Graceful blooms flow in rhythmic elegance, merging nature and movement.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+  <section style="background: #141e30">
+    <img src="image/barcode.jpeg" alt="Design 7">
+      <h2>Barcode Blossom</h2>
+    <p>A fusion of structured lines and organic florals, blending precision with natural beauty.</p>
+    <a href="#" class="btn">View Design</a>
+  </section>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infinite Scroll Cards</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Mori, sans-serif, Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #114b21 0%, #1e7a3a 50%, #69c97b 100%);
+      background-size: 200% 200%;
+      animation: bgAnimation 10s ease infinite;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 4px);
+      pointer-events: none;
+      z-index: 0;
+      animation: stripeMove 15s linear infinite;
+    }
+
+    @keyframes bgAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes stripeMove {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .gallery {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+      z-index: 10;
+      padding: 0 1rem;
+    }
+    
+    ul.cards {
+      position: relative;
+      width: 320px;
+      height: 450px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      perspective: 1500px;
+    }
+
+    ul.cards li {
+      position: absolute;
+      width: 320px;
+      height: 450px;
+      background-color: #000;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      color: #03f484;
+      padding: 1.2rem 1.5rem;
+      overflow-y: auto;
+      user-select: none;
+      cursor: grab;
+      line-height: 1.4;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+    }
+
+    ul.cards li::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ul.cards li::-webkit-scrollbar-thumb {
+      background-color: #57a818;
+      border-radius: 8px;
+    }
+
+    ul.cards li p b {
+      margin: 0;
+      color: aliceblue;
+      font-size: 17px;
+      font-family:'Times New Roman', Times, serif ;
+    }
+
+    .actions {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 20;
+    }
+
+    button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: black;
+      color: #03f484;
+      font-size: 28px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    button:hover {
+      background: #03f484;
+      box-shadow: 0 0 8px #57a818;
+      color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="gallery">
+    <ul class="cards">
+      <li>
+        <p>🤝 <b>Fashion Forward x Gentex:</b><br />
+          We co-developed AI-powered stitching algorithms to blend eco-threads.<br />
+          Their streetwear line now includes bio-dyed, stretchable denim.<br />
+          Integrated personalized fit profiling for urban youth.<br />
+          Reduced CO₂ impact by 34% over 6 months.<br />
+          Hosted workshops on green fashion coding.<br />
+          Enabled traceable supply chains through blockchain APIs.<br />
+          Shared trend analytics to inspire capsule collections.<br />
+          Launched collaborative pop-up stores in 3 cities.<br />
+          Strengthened community outreach in low-waste garment circles.
+        </p>
+      </li>
+
+      <li>
+        <p>🌱 <b>GreenWeave Labs:</b><br />
+          Plugged Gentex’s eco-score engine into their recycling workflow.<br />
+          Transformed scrap fibers into premium wearables.<br />
+          Reduced landfill waste by 1.2 tons monthly.<br />
+          Introduced AI prediction for compost timelines.<br />
+          Enhanced labeling with real-time impact data.<br />
+          Jointly created green certification badges.<br />
+          Partnered in school awareness programs.<br />
+          Built dashboards tracking energy and water savings.<br />
+          Promoted circular fashion through retail pilots.
+        </p>
+      </li>
+
+      <li>
+        <p>🧵 <b>ThreadVerse Studio:</b><br />
+          Empowered seasonal palette generation using Gentex AI.<br />
+          Modeled color trends based on regional moods and climates.<br />
+          Enabled real-time simulation of thread density and sheen.<br />
+          Blended cultural influences into fabric moodboards.<br />
+          Integrated virtual sampling to reduce dye waste.<br />
+          Conducted co-labs with indie fiber artists.<br />
+          Provided AI color guides to artisan weavers.<br />
+          Hosted interactive design festivals powered by data.<br />
+          Published open-source color trend reports for 2025.
+        </p>
+      </li>
+
+      <li>
+        <p>🔬 <b>EcoGraph Research Team:</b><br />
+          Used Gentex models to predict biodegradability patterns.<br />
+          Mapped decay metrics based on moisture and light exposure.<br />
+          Simulated years of environmental wear in days.<br />
+          Shared results with green policy organizations.<br />
+          Developed educational models for textile life cycles.<br />
+          Applied decay maps in wearable tech designs.<br />
+          Embedded QR data in fabrics to track decomposition.<br />
+          Published AI-assisted journals on fiber behavior.<br />
+          Trained sustainability students in smart textile analysis.
+        </p>
+      </li>
+
+      <li>
+        <p>🎮 <b>VirtuWear VR Mod Group:</b><br />
+          Introduced Gentex textures to avatar fashion models.<br />
+          Simulated fabric behavior in dynamic metaverse environments.<br />
+          Enabled AI-fit prediction inside VR wardrobes.<br />
+          Partnered in NFT eco-fabric drops.<br />
+          Linked wearables to sustainability scoreboards.<br />
+          Created haptic feedback for sustainable fabric feels.<br />
+          Built XR tutorials on eco-design integration.<br />
+          Hosted VR fashion week with over 10k participants.<br />
+          Fostered inclusivity with adaptive wear in VR.
+        </p>
+      </li>
+
+      <li>
+        <p>🌐 <b>WearNext AI:</b><br />
+          Gentex supported real-time trend sync across fashion houses.<br />
+          Used geospatial data to predict eco-wear demands.<br />
+          Built APIs that adjust design based on climate reports.<br />
+          Offered rapid prototype suggestions based on AI sentiment.<br />
+          Merged consumer feedback loops into product pivots.<br />
+          Tracked sustainability influence via social media triggers.<br />
+          Shared forecasting data for global ethical brands.<br />
+          Enabled machine-learning guided launch timing.<br />
+          Created eco-forecast plugins for design software.
+        </p>
+      </li>
+
+      <li>
+        <p>👟 <b>RegenSole Collab:</b><br />
+          Developed foam soles using plant-based compounds.<br />
+          Gentex provided AI fit analysis for ergonomic footwear.<br />
+          Optimized 3D molds to reduce wastage by 42%.<br />
+          Helped simulate pressure zones during high-movement activity.<br />
+          Added dynamic bounce memory using smart layering.<br />
+          Launched shoe customization tool linked to foot scan data.<br />
+          Created fully decomposable packaging sleeves.<br />
+          Brought carbon tracking to every pair sold.<br />
+          Initiated “Plant a Pair” program with seed soles.
+        </p>
+      </li>
+
+      <li>
+        <p>🛍 <b>RetailLoop AI:</b><br />
+          Combined Gentex profiling with real-time buying patterns.<br />
+          Lowered fashion return rates by 28% in beta cities.<br />
+          Offered smart size predictions through camera inference.<br />
+          Enabled mood-based UI recommendations for eco-products.<br />
+          Built ethical cart nudges at checkout.<br />
+          Integrated blockchain authenticity tags for buyers.<br />
+          Delivered post-sale wear analytics for care advice.<br />
+          Created loyalty rewards for sustainable purchases.<br />
+          Shared aggregated data for green market trends.
+        </p>
+      </li>
+
+      <li>
+        <p>🧶 <b>FiberFutures Consortium:</b><br />
+          Gentex powered AI models predicting next-gen fiber blends.<br />
+          Supported lab synthesis decisions to enhance durability.<br />
+          Created AI maps of fiber fatigue and eco impact.<br />
+          Collaborated on open-source eco-standards.<br />
+          Integrated predictive analytics into manufacturing lines.<br />
+          Helped develop AI-guided quality inspection.<br />
+          Fostered joint funding applications for green research.<br />
+          Delivered interactive fiber performance dashboards.<br />
+          Led industry roundtables on sustainable innovation.
+        </p>
+      </li>
+
+      <li>
+        <p>🌍 <b>Global Green Wear Initiative:</b><br />
+          Gentex data shared for worldwide textile footprint assessment.<br />
+          Mapped eco impacts across continents.<br />
+          Assisted UN sustainability goals on circular fashion.<br />
+          Supported NGOs with AI-aided product lifecycle data.<br />
+          Created community training modules in eco-fashion tech.<br />
+          Developed apps linking consumers to local green brands<br />
+          Promoted transparency with behind-the-seams edits.<br />
+    </p>
+  </li>
+
+  <li>
+    <p>⚡ <b>FiberFuture Labs:</b><br>
+      Jointly developing memory fabrics for adaptive wear.<br>
+      Gentex helps map mood-triggered thermoregulation.<br>
+      Simulated color change under emotional inputs.<br>
+      Modeled reactive seams for posture enhancement.<br>
+      Tested sweat-to-energy capture fabrics.<br>
+      Crafted wearable tech for mindfulness tracking.<br>
+      Created forecast-based weather-adaptive textiles.<br>
+      Integrated nano-coatings for self-healing fibers.<br>
+      Launched youth lab for future-proof fiber research.
+    </p>
+  </li>
+</ul>
+
+
+  <div class="actions">
+    <button class="prev" aria-label="Previous Card">&lt;</button>
+    <button class="next" aria-label="Next Card">&gt;</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  let iteration = 0;
+
+  const spacing = 0.1,
+    snap = gsap.utils.snap(spacing),
+    cards = gsap.utils.toArray('.cards li'),
+    seamlessLoop = buildSeamlessLoop(cards, spacing),
+    scrub = gsap.to(seamlessLoop, {
+      totalTime: 0,
+      duration: 0.5,
+      ease: "power3",
+      paused: true
+    }),
+    trigger = ScrollTrigger.create({
+      start: 0,
+      onUpdate(self) {
+        if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
+          wrapForward(self);
+        } else if (self.progress < 1e-5 && self.direction < 0 && !self.wrapping) {
+          wrapBackward(self);
+        } else {
+          scrub.vars.totalTime = snap((iteration + self.progress) * seamlessLoop.duration());
+          scrub.invalidate().restart();
+          self.wrapping = false;
+        }
+      },
+      end: "+=3000",
+      pin: ".gallery"
+    });
+
+  function wrapForward(trigger) {
+    iteration++;
+    trigger.wrapping = true;
+    trigger.scroll(trigger.start + 1);
+  }
+
+  function wrapBackward(trigger) {
+    iteration--;
+    if (iteration < 0) {
+      iteration = 9;
+      seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10);
+      scrub.pause();
+    }
+    trigger.wrapping = true;
+    trigger.scroll(trigger.end - 1);
+  }
+
+  function scrubTo(totalTime) {
+    let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
+    if (progress > 1) {
+      wrapForward(trigger);
+    } else if (progress < 0) {
+      wrapBackward(trigger);
+    } else {
+      trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
+    }
+  }
+
+  document.querySelector(".next").addEventListener("click", () => scrubTo(scrub.vars.totalTime + spacing));
+  document.querySelector(".prev").addEventListener("click", () => scrubTo(scrub.vars.totalTime - spacing));
+
+  function buildSeamlessLoop(items, spacing) {
+    let overlap = Math.ceil(1 / spacing),
+      startTime = items.length * spacing + 0.5,
+      loopTime = (items.length + overlap) * spacing + 1,
+      rawSequence = gsap.timeline({ paused: true }),
+      seamlessLoop = gsap.timeline({
+        paused: true,
+        repeat: -1,
+        onRepeat() {
+          this._time === this._dur && (this._tTime += this._dur - 0.01);
+        }
+      }),
+      l = items.length + overlap * 2,
+      time = 0,
+      i, index, item;
+
+    gsap.set(items, { xPercent: 400, opacity: 0, scale: 0 });
+
+    for (i = 0; i < l; i++) {
+      index = i % items.length;
+      item = items[index];
+      time = i * spacing;
+      rawSequence
+        .fromTo(
+          item,
+          { scale: 0, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            zIndex: 100,
+            duration: 0.5,
+            yoyo: true,
+            repeat: 1,
+            ease: "power1.in",
+            immediateRender: false
+          },
+          time
+        )
+        .fromTo(
+          item,
+          { xPercent: 400 },
+          { xPercent: -400, duration: 1, ease: "none", immediateRender: false },
+          time
+        );
+      i <= items.length && seamlessLoop.add("label" + i, time);
+    }
+
+    rawSequence.time(startTime);
+    seamlessLoop
+      .to(rawSequence, {
+        time: loopTime,
+        duration: loopTime - startTime,
+        ease: "none"
+      })
+      .fromTo(
+        rawSequence,
+        { time: overlap * spacing + 1 },
+        {
+          time: startTime,
+          duration: startTime - (overlap * spacing + 1),
+          immediateRender: false,
+          ease: "none"
+        }
+      );
+
+    return seamlessLoop;
+  }
+  
+</script>
+
+</body>
+</html>
